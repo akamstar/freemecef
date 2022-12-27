@@ -1,0 +1,21 @@
+{
+    "name": "akamstar/freemecef",
+    "description": "Simple PHP emecef integration",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "akamstar"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "guzzlehttp/guzzle": "^7.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Freemecef\\": "src/"
+        }
+    }
+}
