@@ -17,6 +17,7 @@ class EmecefInfo
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => $prod? PRODURL:TESTURL,
             'timeout'  => 6,
+            'http_errors' => false,
             'headers' => [
                 "Authorization" => "Bearer " .$token,
                 "Content-Type" => "application/json",
