@@ -11,8 +11,8 @@ class Emecef
     private $client, $products, $ifu, $operator, $endpoint;
     //private $prod, $token;
 
-    const ACTION_CONFIRM = 'confirmer',
-        ACTION_CANCEL = 'annuler';
+    const ACTION_CONFIRM = 'confirm',
+        ACTION_CANCEL = 'cancel';
     const AIB_A = 'A',
         AIB_B ='B';
 
