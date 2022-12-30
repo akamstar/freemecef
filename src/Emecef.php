@@ -7,12 +7,14 @@ require_once __DIR__.'/config.php';
 
 class Emecef
 {
-    private $http, $payment_type, $id, $invoice_type;
+    private $http, $payment_type, $id, $invoice_type, $aib;
     private $client, $products, $ifu, $operator, $endpoint;
     //private $prod, $token;
 
     const ACTION_CONFIRM = 'confirmer',
         ACTION_CANCEL = 'annuler';
+    const AIB_A = 'A',
+        AIB_B ='B';
 
     public function __construct($token, $prod = false)
     {
@@ -87,6 +89,13 @@ class Emecef
         return $this;
     }
 
+    public function setAib($aib)
+    {
+        $this->aib = $aib;
+
+        return $this;
+    }
+
     public function setReference($id)
     {
         $this->id = $id;
@@ -94,7 +103,7 @@ class Emecef
         return $this;
     }
 
-    public function addProduct($name, $price, $qty, $tax = 'A', $specTax = null)
+    public function addProduct($name, $price, $qty, $tax = 'A', $specTax = null, $original_price=null, $price_description=null)
     {
         $product = [
             'name' => $name,
@@ -103,6 +112,11 @@ class Emecef
             'taxGroup' => $tax
         ];
         if ($specTax) $product['taxSpecific'] = $specTax;
+
+        if ($original_price && $price_description) {
+            $product['originalPrice'] = $original_price;
+            $product['priceModification'] = $price_description;
+        }
 
         $this->products[] = $product;
         return $this;
@@ -140,6 +154,11 @@ class Emecef
         $data['operator'] = $this->operator;
 
         $data['payment'] = $this->payment_type;
+
+        if ($this->aib){
+            $data['aib'] = $this->aib;
+        }
+
         //dd($data);
         $response = $this->http->post($this->endpoint.'/',[
             'body' => json_encode($data),
